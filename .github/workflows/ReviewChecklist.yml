@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: Read review checklist into environment variable
+      - name: Get review checklist
         run: |
           {
             echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
@@ -32,12 +32,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const { REVIEW_CHECKLIST } = process.env
             const result = await github.rest.pulls.get({
               pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            })
-            console.log(result)
+            });
+            console.log(result.data.body + '\n---\n' + REVIEW_CHECKLIST)
       - name: Update PR description
         uses: actions/github-script@v6
         with:
