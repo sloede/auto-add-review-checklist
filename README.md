@@ -42,12 +42,13 @@ jobs:
         with:
           script: |
             const { REVIEW_CHECKLIST } = process.env;
+            const with_love = '\n\n*Review checklist added automatically with :heart: by Trixi.jl*';
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: REVIEW_CHECKLIST
+              body: REVIEW_CHECKLIST + with_love,
             });
 ```
 
@@ -86,8 +87,8 @@ jobs:
               repo: context.repo.repo,
             });
 
-            const sep = '\n\n---\n'
-            const with_love = '\n\n*Note: review checklist added automatically with :heart: by Trixi.jl*';
+            const sep = '\n\n---\n';
+            const with_love = '\n\n*Review checklist added automatically with :heart: by Trixi.jl*';
             const body_updated = result.data.body + sep + REVIEW_CHECKLIST + with_love;
 
             github.rest.pulls.update({
