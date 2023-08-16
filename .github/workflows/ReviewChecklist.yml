@@ -27,3 +27,14 @@ jobs:
               repo: context.repo.repo,
               body: `${REVIEW_CHECKLIST}`
             })
+      - name: Update PR description
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { REVIEW_CHECKLIST } = process.env
+            github.rest.pulls.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'We like to party!'
+            })
