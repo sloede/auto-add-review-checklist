@@ -14,12 +14,9 @@ jobs:
           script: console.log(context)
       - name: Read review checklist into environment variable
         run: |
-          echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
-          cat .github/review-checklist.md
-          echo 'REVIEW_CHECKLIST_EOF'
           {
             echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
-            echo "WOLOLO"
+            cat .github/review-checklist.md
             echo 'REVIEW_CHECKLIST_EOF'
           } >> "$GITHUB_ENV"
       - name: Add review checklist
@@ -28,7 +25,7 @@ jobs:
           script: |
             const { REVIEW_CHECKLIST } = process.env
             github.rest.issues.createComment({
-              issue_number: context.pull_request.number,
+              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: '${REVIEW_CHECKLIST}'
