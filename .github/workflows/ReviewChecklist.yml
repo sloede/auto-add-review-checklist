@@ -16,17 +16,28 @@ jobs:
             echo
             echo 'REVIEW_CHECKLIST_EOF'
           } >> "$GITHUB_ENV"
-      - name: Add review checklist
+      # - name: Add review checklist
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       const { REVIEW_CHECKLIST } = process.env
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: `${REVIEW_CHECKLIST}`
+      #       })
+
+      - name: Get PR description
         uses: actions/github-script@v6
         with:
           script: |
-            const { REVIEW_CHECKLIST } = process.env
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            const result = github.rest.pulls.get({
+              pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${REVIEW_CHECKLIST}`
             })
+            console.log(result)
       - name: Update PR description
         uses: actions/github-script@v6
         with:
