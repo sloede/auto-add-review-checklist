@@ -28,7 +28,6 @@ jobs:
               repo: context.repo.repo,
               body: REVIEW_CHECKLIST
             });
-
       - name: Append review checklist to PR description
         uses: actions/github-script@v6
         with:
