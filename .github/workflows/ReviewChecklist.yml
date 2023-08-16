@@ -6,18 +6,48 @@ jobs:
   add-review-checklist:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Add review checklist
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Read review checklist template from file
         run: |
-          gh pr comment --body-file .github/review-checklist.md
-        env:
-          GH_TOKEN: ${{ github.token }}
-      # - uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: '👋 Thanks for reporting!'
-      #       })
+          {
+            echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
+            cat .github/review-checklist.md
+            echo
+            echo 'REVIEW_CHECKLIST_EOF'
+          } >> "$GITHUB_ENV"
+      - name: Add review checklist as comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { REVIEW_CHECKLIST } = process.env;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: REVIEW_CHECKLIST
+            });
+
+      - name: Append review checklist to PR description
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { REVIEW_CHECKLIST } = process.env;
+
+            const result = await github.rest.pulls.get({
+              pull_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const sep = '\n\n---\n'
+            const with_love = '\n\n*Note: review checklist added automatically with :heart: by Trixi.jl*';
+            const body_updated = result.data.body + sep + REVIEW_CHECKLIST + with_love;
+
+            github.rest.pulls.update({
+              pull_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body_updated,
+            });
