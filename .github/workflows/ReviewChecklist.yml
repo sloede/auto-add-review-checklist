@@ -33,7 +33,7 @@ jobs:
           script: |
             const { REVIEW_CHECKLIST } = process.env
             github.rest.pulls.update({
-              issue_number: context.issue.number,
+              pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'We like to party!'
