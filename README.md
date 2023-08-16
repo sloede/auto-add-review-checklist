@@ -1,4 +1,4 @@
-# Auto-add review checklist to PRs
+# Auto-add review checklist to PRs 
 Test repo for automatically adding a review checklist to newly created PRs.
 
 Currently, two variants are supported, both facilitated by the use of GitHub Actions: either
