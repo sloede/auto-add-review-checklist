@@ -14,11 +14,11 @@ jobs:
           script: console.log(context)
       - name: Read review checklist into environment variable
         run: |
-          {
-            echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
-            cat .github/review-checklist.md
-            echo 'REVIEW_CHECKLIST_EOF'
-          } >> "$GITHUB_ENV"
+          cat "$GITHUB_ENV"
+          echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF' >> "$GITHUB_ENV"
+          cat .github/review-checklist.md >> "$GITHUB_ENV"
+          echo 'REVIEW_CHECKLIST_EOF' >> "$GITHUB_ENV"
+          cat "$GITHUB_ENV"
       - name: Add review checklist
         uses: actions/github-script@v6
         with:
