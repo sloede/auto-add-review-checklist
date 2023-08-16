@@ -8,17 +8,14 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: View context attributes
-        uses: actions/github-script@v6
-        with:
-          script: console.log(context)
       - name: Read review checklist into environment variable
         run: |
-          cat "$GITHUB_ENV"
-          echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF' >> "$GITHUB_ENV"
-          cat .github/review-checklist.md >> "$GITHUB_ENV"
-          echo 'REVIEW_CHECKLIST_EOF' >> "$GITHUB_ENV"
-          cat "$GITHUB_ENV"
+          {
+            echo 'REVIEW_CHECKLIST<<REVIEW_CHECKLIST_EOF'
+            cat .github/review-checklist.md
+            echo
+            echo 'REVIEW_CHECKLIST_EOF'
+          } >> "$GITHUB_ENV"
       - name: Add review checklist
         uses: actions/github-script@v6
         with:
