@@ -10,6 +10,8 @@ jobs:
       - name: Add review checklist
         run: |
           gh pr comment --body-file .github/review-checklist.md
+        env:
+          GH_TOKEN: ${{ github.token }}
       # - uses: actions/github-script@v6
       #   with:
       #     script: |
