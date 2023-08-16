@@ -20,11 +20,8 @@ Create the workflow file with the following content:
 name: Add review checklist
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
-
-permissions:
-  pull-requests: write
 
 jobs:
   add-review-checklist:
@@ -60,11 +57,8 @@ Create the workflow file with the following content:
 name: Add review checklist
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
-
-permissions:
-  pull-requests: write
 
 jobs:
   add-review-checklist:
