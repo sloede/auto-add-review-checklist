@@ -17,9 +17,14 @@ options, as described in the following two subsections.
 ### Adding a review checklist as a new comment
 Create the workflow file with the following content:
 ```yml
+name: Add review checklist
+
 on:
   pull_request:
     types: [opened]
+
+permissions:
+  pull-requests: write
 
 jobs:
   add-review-checklist:
@@ -52,9 +57,14 @@ jobs:
 ### Appending the review checklist to the PR description
 Create the workflow file with the following content:
 ```yml
+name: Add review checklist
+
 on:
   pull_request:
     types: [opened]
+
+permissions:
+  pull-requests: write
 
 jobs:
   add-review-checklist:
