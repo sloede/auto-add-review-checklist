@@ -5,6 +5,8 @@ Currently, two variants are supported, both facilitated by the use of GitHub Act
 the review checklist is added as a *new comment* to each newly created PR, or it is
 *appended to the description* of the PR.
 
+:wave:
+
 ## Usage
 
 First, add your Markdown-formatted review checklist as the file `.github/review-checklist.md`
