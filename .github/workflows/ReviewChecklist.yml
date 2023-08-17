@@ -23,7 +23,7 @@ jobs:
         with:
           script: |
             const { REVIEW_CHECKLIST } = process.env;
-            const with_love = '\n\n*Review checklist added automatically with :heart: by Trixi.jl*';
+            const with_love = '\n\n*Review checklist added automatically with :heart: by Trixi.jl with a nasty attack*';
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
